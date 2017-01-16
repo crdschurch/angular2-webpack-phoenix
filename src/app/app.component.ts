@@ -1,3 +1,5 @@
+import logo from '../assets/img/angularclass-logo.png'
+
 /*
  * Angular 2 decorators and services
  */
@@ -54,7 +56,8 @@ import { AppState } from './app.service';
   `
 })
 export class AppComponent implements OnInit {
-  public angularclassLogo = 'assets/img/angularclass-avatar.png';
+  // TODO: figure out how to prefix this correctly
+  public angularclassLogo = logo;
   public name = 'Angular 2 Webpack Starter';
   public url = 'https://twitter.com/AngularClass';
 
