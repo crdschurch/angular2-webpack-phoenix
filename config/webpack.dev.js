@@ -7,6 +7,8 @@ const webpackMerge = require('webpack-merge'); // used to merge webpack configs
 const webpackMergeDll = webpackMerge.strategy({plugins: 'replace'});
 const commonConfig = require('./webpack.common.js'); // the settings that are common to prod and dev
 
+const PHOENIX_SERVER = process.env.PHOENIX_SERVER || false;
+
 /**
  * Webpack Plugins
  */
@@ -60,7 +62,7 @@ module.exports = function (options) {
        *
        * See: http://webpack.github.io/docs/configuration.html#output-path
        */
-      path: helpers.root('dist'),
+      path: PHOENIX_SERVER ? helpers.root("../../../../priv/static/js/angular2-webpack") : helpers.root('dist'),
 
       /**
        * Specifies the name of each output file on disk.
@@ -87,6 +89,7 @@ module.exports = function (options) {
 
       library: 'ac_[name]',
       libraryTarget: 'var',
+      publicPath: '/js/angular2-webpack/'
     },
 
     module: {
