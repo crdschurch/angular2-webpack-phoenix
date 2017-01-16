@@ -7,8 +7,7 @@ const EVENT = process.env.npm_lifecycle_event || '';
 
 // Helper functions
 var ROOT = path.resolve(__dirname, '..');
-
-var phoenix_root = path.resolve(__dirname, '../../dist');
+var PHOENIX_ROOT = path.resolve(__dirname, '../../../../priv/static/js')
 
 function hasProcessFlag(flag) {
   return process.argv.join('').indexOf(flag) > -1;
@@ -23,8 +22,10 @@ function isWebpackDevServer() {
 }
 
 var root = path.join.bind(path, ROOT);
+var phoenix_root = path.join.bind(path, PHOENIX_ROOT)
 
 exports.hasProcessFlag = hasProcessFlag;
 exports.hasNpmFlag = hasNpmFlag;
 exports.isWebpackDevServer = isWebpackDevServer;
 exports.root = root;
+exports.phoenix_root = phoenix_root;
