@@ -4,6 +4,7 @@
 
 const webpack = require('webpack');
 const helpers = require('./helpers');
+const PHOENIX_SERVER = process.env.MIX_ENV || false;
 
 /*
  * Webpack Plugins
@@ -58,10 +59,8 @@ module.exports = function (options) {
      */
     entry: {
 
-      'polyfills': './src/polyfills.browser.ts',
-      'main':      AOT ? './src/main.browser.aot.ts' :
-                  './src/main.browser.ts'
-
+      'polyfills': helpers.root('./src/polyfills.browser.ts'),
+      'main':      helpers.root('./src/main.browser.ts')
     },
 
     /*
@@ -79,7 +78,7 @@ module.exports = function (options) {
       extensions: ['.ts', '.js', '.json'],
 
       // An array of directory names to be resolved to the current directory
-      modules: [helpers.root('src'), helpers.root('node_modules')],
+      //modules: [helpers.root('src'), helpers.root('node_modules')],
 
     },
 
@@ -103,7 +102,7 @@ module.exports = function (options) {
           test: /\.ts$/,
           use: [
             '@angularclass/hmr-loader?pretty=' + !isProd + '&prod=' + isProd,
-            'awesome-typescript-loader?{configFileName: "tsconfig.webpack.json"}',
+            'awesome-typescript-loader?{configFileName: "./tsconfig.webpack.json"}',
             'angular2-template-loader',
             {
               loader: 'ng-router-loader',
@@ -238,8 +237,8 @@ module.exports = function (options) {
        * See: https://www.npmjs.com/package/copy-webpack-plugin
        */
       new CopyWebpackPlugin([
-        { from: 'src/assets', to: 'assets' },
-        { from: 'src/meta'}
+        { from: helpers.root('src/assets'), to: helpers.root('assets') },
+        { from: helpers.root('src/meta')}
       ]),
 
 
@@ -252,7 +251,7 @@ module.exports = function (options) {
        * See: https://github.com/ampedandwired/html-webpack-plugin
        */
       new HtmlWebpackPlugin({
-        template: 'src/index.html',
+        template: helpers.root('src/index.html'),
         title: METADATA.title,
         chunksSortMode: 'dependency',
         metadata: METADATA,
@@ -293,7 +292,7 @@ module.exports = function (options) {
        * Dependencies: HtmlWebpackPlugin
        */
       new HtmlElementsPlugin({
-        headTags: require('./head-config.common')
+        headTags: require(helpers.root('./config/head-config.common'))
       }),
 
       /**
@@ -328,7 +327,7 @@ module.exports = function (options) {
       new ngcWebpack.NgcWebpackPlugin({
         disabled: !AOT,
         tsConfig: helpers.root('tsconfig.webpack.json'),
-        resourceOverride: helpers.root('config/resource-override.js')
+        resourceOverride: helpers.root('./config/resource-override.js')
       })
 
     ],
