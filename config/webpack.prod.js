@@ -6,6 +6,7 @@ const helpers = require('./helpers');
 const webpackMerge = require('webpack-merge'); // used to merge webpack configs
 const commonConfig = require('./webpack.common.js'); // the settings that are common to prod and dev
 
+const PHOENIX_SERVER = process.env.MIX_ENV || false;
 /**
  * Webpack Plugins
  */
@@ -54,7 +55,7 @@ module.exports = function (env) {
        *
        * See: http://webpack.github.io/docs/configuration.html#output-path
        */
-      path: helpers.root('dist'),
+      path: PHOENIX_SERVER ? "./priv/static/js/angular2-webpack" : helpers.root('dist'),
 
       /**
        * Specifies the name of each output file on disk.
@@ -62,7 +63,7 @@ module.exports = function (env) {
        *
        * See: http://webpack.github.io/docs/configuration.html#output-filename
        */
-      filename: '[name].[chunkhash].bundle.js',
+      filename: '[name].bundle.js',
 
       /**
        * The filename of the SourceMaps for the JavaScript files.
@@ -70,7 +71,7 @@ module.exports = function (env) {
        *
        * See: http://webpack.github.io/docs/configuration.html#output-sourcemapfilename
        */
-      sourceMapFilename: '[name].[chunkhash].bundle.map',
+      sourceMapFilename: '[name].bundle.map',
 
       /**
        * The filename of non-entry chunks as relative path
@@ -78,8 +79,8 @@ module.exports = function (env) {
        *
        * See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
        */
-      chunkFilename: '[id].[chunkhash].chunk.js'
-
+      chunkFilename: '[id].chunk.js',
+      publicPath: '/js/angular2-webpack/'
     },
 
     module: {
@@ -120,32 +121,8 @@ module.exports = function (env) {
      * See: http://webpack.github.io/docs/configuration.html#plugins
      */
     plugins: [
-
-      /**
-       * Plugin: ExtractTextPlugin
-       * Description: Extracts imported CSS files into external stylesheet 
-       *
-       * See: https://github.com/webpack/extract-text-webpack-plugin
-       */
-      new ExtractTextPlugin('[name].[contenthash].css'),
-
-      /**
-       * Plugin: WebpackMd5Hash
-       * Description: Plugin to replace a standard webpack chunkhash with md5.
-       *
-       * See: https://www.npmjs.com/package/webpack-md5-hash
-       */
+      new ExtractTextPlugin('[name].css'),
       new WebpackMd5Hash(),
-
-      /**
-       * Plugin: DefinePlugin
-       * Description: Define free variables.
-       * Useful for having development builds with debug logging or adding global constants.
-       *
-       * Environment helpers
-       *
-       * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
-       */
       // NOTE: when adding more properties make sure you include them in custom-typings.d.ts
       new DefinePlugin({
         'ENV': JSON.stringify(METADATA.ENV),
@@ -180,7 +157,7 @@ module.exports = function (env) {
         // }, // debug
         // comments: true, //debug
 
-
+        sourceMap: false,
         beautify: false, //prod
         output: {
           comments: false

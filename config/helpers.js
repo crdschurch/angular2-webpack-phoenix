@@ -22,7 +22,7 @@ function isWebpackDevServer() {
   return process.argv[1] && !! (/webpack-dev-server/.exec(process.argv[1]));
 }
 
-var root = path.join.bind(PHOENIX_SERVER ? './web/static/js/angular1-webpack-phoenix' + path : path, ROOT);
+var root = path.join.bind(PHOENIX_SERVER ? './web/static/js/angular2-webpack-phoenix' + path : path, ROOT);
 var phoenix_root = path.join.bind(path, PHOENIX_ROOT)
 
 exports.hasProcessFlag = hasProcessFlag;
