@@ -85,7 +85,7 @@ module.exports = function (options) {
 
       library: 'ac_[name]',
       libraryTarget: 'var',
-      publicPath: '/js/angular2-webpack/'
+      publicPath: PHOENIX_SERVER ? '/js/angular2-webpack/' : '/'
     },
 
     module: {
