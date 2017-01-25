@@ -4,6 +4,7 @@ const webpackMergeDll = webpackMerge.strategy({plugins: 'replace'});
 const commonConfig = require('./webpack.common.js'); // the settings that are common to prod and dev
 
 const PHOENIX_SERVER = process.env.MIX_ENV || false;
+console.log(PHOENIX_SERVER)
 
 /**
  * Webpack Plugins
@@ -85,7 +86,7 @@ module.exports = function (options) {
 
       library: 'ac_[name]',
       libraryTarget: 'var',
-      publicPath: '/js/angular2-webpack/'
+      publicPath: PHOENIX_SERVER ? '/js/angular2-webpack/' : '/'
     },
 
     module: {

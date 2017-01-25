@@ -109,9 +109,22 @@ module.exports = function (options) {
                 aot: AOT
               }
             },
-            '@angularclass/hmr-loader?pretty=' + !isProd + '&prod=' + isProd,
-            'awesome-typescript-loader?{configFileName: "./tsconfig.webpack.json"}',
-            'angular2-template-loader'
+            {
+              loader: '@angularclass/hmr-loader',
+              options: {
+                pretty: !isProd,
+                prod: isProd
+              }
+            },
+            {
+              loader: 'awesome-typescript-loader',
+                options: {
+                  configFileName: helpers.root('tsconfig.webpack.json')
+                }
+            },
+            {
+              loader: 'angular2-template-loader'
+            }
           ],
           exclude: [/\.(spec|e2e)\.ts$/]
         },
