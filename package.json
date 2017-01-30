@@ -1,6 +1,8 @@
 {
   "name": "angular2-phoenix",
+
   "version": "0.0.1",
+
   "description": "An Angular 2 Webpack Starter kit featuring Angular 2 (Router, Http, Forms, Services, Tests, E2E, Coverage), Karma, Protractor, Jasmine, Istanbul, TypeScript, customized to work within a Phoenix project",
   "keywords": [
     "angular2",
@@ -162,5 +164,3 @@
   "engines": {
     "node": ">= 4.2.1",
     "npm": ">= 3"
-  }
-}
